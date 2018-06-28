@@ -2,7 +2,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)-$(shell uname -s)
 endif
 
-TARGET := alnim
+TARGET := replace
 
 BINDIR := bin
 SRCDIR := ./
