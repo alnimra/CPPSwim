@@ -26,12 +26,13 @@ void replaceAllOccurancesOfS1inStrtoS2(std::string &str, std::string s1,
 void replace(std::string filename, std::string s1, std::string s2) {
 	std::ifstream file;
 	std::ofstream newFile;
-	newFile.open(filename + ".replace");
 	file.open(filename);
 	if (!file.is_open()) {
 		std::cout << "File opening error." << std::endl;
 		exit(1);
-	} else if (!newFile.is_open()) {
+	}
+	newFile.open(filename + ".replace");
+	if (!newFile.is_open()) {
 		std::cout << "File creation error." << std::endl;
 		exit(1);
 	}
