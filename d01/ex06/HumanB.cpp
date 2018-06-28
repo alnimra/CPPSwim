@@ -12,10 +12,14 @@
 
 #include "HumanB.h"
 
-HumanB::HumanB(Weapon *weapon, std::string name)
-	: _weapon(weapon), _name(name) {}
+HumanB::HumanB(std::string name) : _name(name) {
+	std::cout << "Created a HumanB" << std::endl;
+	this->_weapon = nullptr;
+}
 
 HumanB::~HumanB() { std::cout << this << ": Destroyed HumanB" << std::endl; }
+
+void HumanB::setWeapon(Weapon &w) { this->_weapon = &w; }
 
 void HumanB::attack() {
 	std::cout << this->_name << " attacks with his " << this->_weapon->getType()
