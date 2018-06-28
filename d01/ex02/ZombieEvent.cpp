@@ -9,9 +9,7 @@ ZombieEvent::ZombieEvent(std::string type) : _type(type) {
 
 /* :> ZombieEvent setZombieType
  */
-void ZombieEvent::setZombieType(std::string type) {
-	this->_type = type;
-}
+void ZombieEvent::setZombieType(std::string type) { this->_type = type; }
 
 /* :> ZombieEvent newZombie
  */
@@ -23,8 +21,8 @@ Zombie *ZombieEvent::newZombie(std::string name) {
  */
 Zombie *ZombieEvent::randomChump() {
 	return new Zombie(std::to_string(rand() % 100), this->_type);
+	randomAnnouncers[i]->announce();
 }
-
 
 /* :> ZombieEvent Deconstructor
  */
