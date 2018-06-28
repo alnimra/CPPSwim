@@ -22,7 +22,6 @@ int main(void) {
 	event.setZombieType("rnd");
 	for (int i = 0; i < 4; i++) {
 		randomAnnouncers[i] = event.randomChump();
-		randomAnnouncers[i]->announce();
 	}
 	for (int i = 0; i < 4; i++) {
 		delete randomAnnouncers[i];

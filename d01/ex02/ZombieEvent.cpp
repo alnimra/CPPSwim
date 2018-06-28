@@ -20,8 +20,9 @@ Zombie *ZombieEvent::newZombie(std::string name) {
 /* :> ZombieEvent randomChump
  */
 Zombie *ZombieEvent::randomChump() {
-	return new Zombie(std::to_string(rand() % 100), this->_type);
-	randomAnnouncers[i]->announce();
+	Zombie *zombie = new Zombie(std::to_string(rand() % 100), this->_type);
+	zombie->announce();
+	return zombie;
 }
 
 /* :> ZombieEvent Deconstructor
