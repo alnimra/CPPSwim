@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Character.h                                           :+:      :+:    :+:*/
+/*   AWeapon.h                                           :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Character_H
-#define Character_H
+#ifndef AWEAPON_H
+#define AWEAPON_H
 
 #include <iostream>
 #include <string>
 
-#include "Enemy.h"
-#include "AWeapon.h"
-
-class Character {
+class AWeapon {
   public:
-	Character();
-	Character(const Character &Character);
-	Character &operator=(const Character &rhs);
-	Character(const std::string & name);
+	AWeapon();
+	AWeapon(const AWeapon &AWeapon);
+	AWeapon &operator=(const AWeapon &rhs);
+	AWeapon(const std::string &name, const int apcost, int damage);
 
-	void recoverAP();
-	void equip(AWeapon *);
-	void attack(Enemy *);
-	void changeAp(int degOfChange);
-	const std::string getName() const;
-	void print(std::ostream &o) const;
-	~Character();
+	std::string getName() const;
+	int getAPCost() const;
+	int getDamage() const;
+	virtual void attack() const = 0;
+	~AWeapon();
 
   private:
 	std::string _name;
-	AWeapon *weapon;
-	int _ap;
+	int _apcost;
+	int _damage;
 };
-
-std::ostream &operator<<(std::ostream &o, const Character &rhs);
 
 #endif

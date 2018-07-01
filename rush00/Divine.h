@@ -13,18 +13,16 @@
 #ifndef DIVINE_H
 #define DIVINE_H
 
-#include <cmath>
 #include <iostream>
+#include <curses.h>
 
 class Game {
   public:
 	Game();
 	Game(const Game &f);
 	Game &operator=(const Game &rhs);
-	Game(const int f);
-	Game(const float f);
 
-	void update()
+	void update();
 	~Game();
 
   private:

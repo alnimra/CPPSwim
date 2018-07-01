@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Character.h                                           :+:      :+:    :+:*/
+/*   Enemy.h                                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Character_H
-#define Character_H
+#ifndef Enemy_H
+#define Enemy_H
 
 #include <iostream>
 #include <string>
 
-#include "Enemy.h"
-#include "AWeapon.h"
-
-class Character {
+class Enemy {
   public:
-	Character();
-	Character(const Character &Character);
-	Character &operator=(const Character &rhs);
-	Character(const std::string & name);
+	Enemy();
+	Enemy(const Enemy &Enemy);
+	Enemy &operator=(const Enemy &rhs);
+	Enemy(int hp, std::string const & type);
 
-	void recoverAP();
-	void equip(AWeapon *);
-	void attack(Enemy *);
-	void changeAp(int degOfChange);
-	const std::string getName() const;
-	void print(std::ostream &o) const;
-	~Character();
+	std::string getType() const;
+	int getHP() const;
+	virtual void takeDamage(int amount);
+	virtual ~Enemy();
 
   private:
-	std::string _name;
-	AWeapon *weapon;
-	int _ap;
+	int _hp;
+	std::string _type;
+	int atkAmount;
+	int x;
+	int y;
 };
-
-std::ostream &operator<<(std::ostream &o, const Character &rhs);
 
 #endif

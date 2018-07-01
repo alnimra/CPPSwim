@@ -33,18 +33,27 @@ Character &Character::operator=(const Character &rhs) {
 	this->weapon = rhs.weapon;
 	return *this;
 }
-
+void			  Character::changeAp(int degOfChange){
+	this->_ap += degOfChange;
+	if(this->_ap < 0)
+		_ap = 0;
+	else if(this->_ap > 40)
+		_ap = 40;
+}
 const std::string Character::getName() const { return this->_name; }
-
+void			  Character::recoverAP() {
+	this->changeAp(10);
+}
 void Character::equip(AWeapon *newWeapon) { weapon = newWeapon; }
 
 void Character::attack(Enemy *enemy) {
 	if (_ap > 0 && this->weapon != nullptr) {
 		std::cout << this->_name + " attacks " + enemy->getType() + " with a " +
-						 this->weapon->getName() << std::endl;
+						 this->weapon->getName()
+				  << std::endl;
 		this->weapon->attack();
 		enemy->takeDamage(this->weapon->getDamage());
-		this->_ap -= this->weapon->getAPCost();
+		this->changeAp(-(this->weapon->getAPCost()));
 		if (enemy->getHP() <= 0)
 			delete enemy;
 	}
@@ -55,7 +64,8 @@ void Character::print(std::ostream &o) const {
 	if (this->weapon != nullptr)
 		weaponStr = "wields a " + this->weapon->getName();
 	o << this->_name + " has " + std::to_string(this->_ap) + " AP and " +
-			 weaponStr << std::endl;
+			 weaponStr
+	  << std::endl;
 }
 /* :> Destructor.
 	- Everything on stack, so no worries.

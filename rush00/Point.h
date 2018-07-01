@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Character.h                                           :+:      :+:    :+:*/
+/*   Point.h                                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Character_H
-#define Character_H
+#ifndef Point_H
+#define Point_H
 
 #include <iostream>
 #include <string>
 
-#include "Enemy.h"
-#include "AWeapon.h"
-
-class Character {
+class Point {
   public:
-	Character();
-	Character(const Character &Character);
-	Character &operator=(const Character &rhs);
-	Character(const std::string & name);
+	Point();
+	Point(const Point &pt);
+	Point &operator=(const Point &rhs);
+	Point(int x, int y);
+	~Point();
 
-	void recoverAP();
-	void equip(AWeapon *);
-	void attack(Enemy *);
-	void changeAp(int degOfChange);
-	const std::string getName() const;
-	void print(std::ostream &o) const;
-	~Character();
-
-  private:
-	std::string _name;
-	AWeapon *weapon;
-	int _ap;
+	int x;
+	int y;
 };
-
-std::ostream &operator<<(std::ostream &o, const Character &rhs);
 
 #endif
