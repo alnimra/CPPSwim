@@ -1,4 +1,4 @@
-#include "Fixed.h"
+#include "Game.h"
 
 int main(void) {
 	Fixed		a;
