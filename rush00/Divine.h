@@ -33,7 +33,10 @@ class Divine {
 	void update();
 
 	void manageUserUpdate(int keyPressed);
+	void manageEnemyUpdate();
 	void makeRndPosForEnemies();
+	void advanceEnemies();
+	void drawAllEntites();
 	~Divine();
 
 	int isRunning;

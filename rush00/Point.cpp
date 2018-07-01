@@ -18,7 +18,7 @@ Point::Point() : x(0), y(0) {}
 
 /* :> Custom Constructor
  */
-Point::Point(int x, int y) : x(x), y(y) {}
+Point::Point(double x, double y) : x(x), y(y) {}
 
 /* :> Copy Constructor
 	- Assigns: the current class the values of the passed class.

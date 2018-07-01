@@ -21,11 +21,11 @@ class Point {
 	Point();
 	Point(const Point &pt);
 	Point &operator=(const Point &rhs);
-	Point(int x, int y);
+	Point(double x, double y);
 	~Point();
 
-	int x;
-	int y;
+	double x;
+	double y;
 };
 
 #endif

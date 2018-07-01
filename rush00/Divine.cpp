@@ -15,12 +15,14 @@
 /* :> Default Constructor
 	- Initializes: _val to 0
 */
-Divine::Divine() : isRunning(1), user(new User(1, "User", 1, 1)), numEnemies(10), wave(1){
-	this->enemies = new Enemy*[numEnemies];
-	for(int i = 0; i < numEnemies; i++)
+Divine::Divine()
+	: isRunning(1), user(new User(1, "User", 1, 1)), numEnemies(10), wave(1) {
+	this->enemies = new Enemy *[numEnemies];
+	for (int i = 0; i < numEnemies; i++)
 		this->enemies[i] = new Enemy(1, "Enemy", 1, 1);
 
-	//Init ncurses
+	this->makeRndPosForEnemies();
+	// Init ncurses
 	this->initNCurses();
 }
 
@@ -37,10 +39,11 @@ Divine &Divine::operator=(const Divine &rhs) {
 		return *this;
 	this->user = rhs.user;
 	this->numEnemies = rhs.numEnemies;
-	//Deep Copy
-	//TODO: Need to make cloning functions for the enemies later for this to work
-	this->enemies = new Enemy*[this->numEnemies];
-	for(int i = 0; i < this->numEnemies; i++)
+	// Deep Copy
+	// TODO: Need to make cloning functions for the enemies later for this to
+	// work
+	this->enemies = new Enemy *[this->numEnemies];
+	for (int i = 0; i < this->numEnemies; i++)
 		this->enemies[i] = new Enemy(1, "Enemy", 1, 1);
 	this->wave = rhs.wave;
 	return *this;
@@ -49,8 +52,8 @@ Divine &Divine::operator=(const Divine &rhs) {
 /* :> initNCurses.
 	- Initialize: the NCurses area.
 */
-void Divine::initNCurses(){
-	//Emoji Support
+void Divine::initNCurses() {
+	// Emoji Support
 	setlocale(LC_ALL, "");
 	initscr();
 	noecho();
@@ -60,33 +63,70 @@ void Divine::initNCurses(){
 /* :> manageUserUpdate.
 	- Manages: the user update events.
 */
-void Divine::manageUserUpdate(int keyPressed){
-	if(keyPressed == KEYUP)
+void Divine::manageUserUpdate(int keyPressed) {
+	if (keyPressed == KEYUP)
 		user->transTowards(0, -1);
-	else if(keyPressed == KEYDOWN)
+	else if (keyPressed == KEYDOWN)
 		user->transTowards(0, 1);
-	else if(keyPressed == KEYLEFT)
+	else if (keyPressed == KEYLEFT)
 		user->transTowards(-1, 0);
-	else if(keyPressed == KEYRIGHT)
+	else if (keyPressed == KEYRIGHT)
 		user->transTowards(1, 0);
 	user->draw();
 }
 
+/* :> manageUserUpdate.
+	- Manages: the user update events.
+*/
+void Divine::manageEnemyUpdate() {
+	this->drawAllEntites();
+	this->advanceEnemies();
+}
+
+/* :> manageUserUpdate.
+	- Manages: the user update events.
+*/
+void Divine::makeRndPosForEnemies() {
+	int rndX;
+	for (int i = 0; i < this->numEnemies; i++) {
+		rndX = rand() % 10;
+		this->enemies[i]->place(60 + rndX, ((i)*2) + 3);
+	}
+}
+
+/* :> drawAllEntites
+	- Manages: the user update events.
+*/
+void Divine::drawAllEntites() {
+	for (int i = 0; i < this->numEnemies; i++)
+		this->enemies[i]->draw();
+}
+/* :> advanceAllEntites.
+	- Manages: the user update events.
+*/
+void Divine::advanceEnemies() {
+	for (int i = 0; i < this->numEnemies; i++)
+		this->enemies[i]->transTowards(-1, 0);
+}
 
 /* :> update
 	- Update: the game state.
 */
-int ch;
-void Divine::update(){
+int  ch;
+void Divine::update() {
 	ch = getch();
 	clear();
 	this->manageUserUpdate(ch);
+	this->manageEnemyUpdate();
 	refresh();
 }
 
 /* :> Destructor.
-	- Everything on stack, so no worries.
+	- Cleanup the enemies...
 */
 Divine::~Divine() {
+	for (int i = 0; i < this->numEnemies; i++)
+		delete this->enemies[i];
+	delete[]this->enemies;
 	endwin();
 }
