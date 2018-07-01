@@ -16,7 +16,7 @@
  */
 Enemy::Enemy(int hp, std::string const &type, int maxHp, int atkDmg)
 	: AEntity(hp, type, maxHp, atkDmg, "😈") {
-	this->_deltaLoc.x = .1;
+	this->_deltaLoc.x = .01;
 }
 
 /* :> Copy Constructor

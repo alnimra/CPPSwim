@@ -57,6 +57,7 @@ void Divine::initNCurses() {
 	setlocale(LC_ALL, "");
 	initscr();
 	noecho();
+	nodelay(stdscr, true);
 	curs_set(FALSE);
 }
 
