@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.cpp                                             :+:      :+:    :+: */
+/*   EntityGroup.cc                                           :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.h"
+#include "EntityGroup.h"
 
 /* :> Default Constructor
  */
-User::User(int hp, std::string const &type, int maxHp, int atkDmg)
-	: AEntity(hp, type, maxHp, atkDmg, "👾") {
-	this->_deltaLoc.x = 2;
-	this->_deltaLoc.y = 1;
-}
+EntityGroup::EntityGroup(int hp, std::string const &type, int maxHp, int atkDmg)
+	: AEntity(hp, type, maxHp, atkDmg, "😈") {}
 
 /* :> Copy Constructor
 	- Assigns: the current class the values of the passed class.
 */
-User::User(const User &user) : AEntity(user) { *this = user; }
+EntityGroup::EntityGroup(const EntityGroup &EntityGroup) : AEntity(EntityGroup){ }
 
-/* :> attack
-	- Attacks the entity.
-*/
-void User::attack(AEntity &entity) { (void)entity; }
 /* :> = op Overload: Assignation operator
-	- Copies all the member variables of the User to the rhs.
+	- Copies all the member variables of the EntityGroup to the rhs.
 */
-User &User::operator=(const User &rhs) {
-	if (this == &rhs)
-		return *this;
+EntityGroup &EntityGroup::operator=(const EntityGroup &rhs) {
 	this->AEntity::operator=(rhs);
 	return *this;
 }
 
+/* :> attack
+	- Attacks the entity.
+*/
+void EntityGroup::attack(AEntity &entity){
+	(void) entity;
+}
 /* :> Destructor.
 	- Everything on stack, so no worries.
 */
-User::~User() {}
+EntityGroup::~EntityGroup() {}

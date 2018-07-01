@@ -3,8 +3,9 @@
 int main(void) {
 	Divine gl;
 	/* Game Loop */
-	while(gl.isRunning){
+	while (gl.isRunning) {
 		gl.update();
+		usleep(1600);
 	}
 	return 0;
 }

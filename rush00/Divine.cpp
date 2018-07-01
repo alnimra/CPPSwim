@@ -50,17 +50,38 @@ Divine &Divine::operator=(const Divine &rhs) {
 	- Initialize: the NCurses area.
 */
 void Divine::initNCurses(){
+	//Emoji Support
+	setlocale(LC_ALL, "");
 	initscr();
 	noecho();
 	curs_set(FALSE);
 }
 
+/* :> manageUserUpdate.
+	- Manages: the user update events.
+*/
+void Divine::manageUserUpdate(int keyPressed){
+	if(keyPressed == KEYUP)
+		user->transTowards(0, -1);
+	else if(keyPressed == KEYDOWN)
+		user->transTowards(0, 1);
+	else if(keyPressed == KEYLEFT)
+		user->transTowards(-1, 0);
+	else if(keyPressed == KEYRIGHT)
+		user->transTowards(1, 0);
+	user->draw();
+}
+
+
 /* :> update
 	- Update: the game state.
 */
+int ch;
 void Divine::update(){
+	ch = getch();
 	clear();
-
+	this->manageUserUpdate(ch);
+	refresh();
 }
 
 /* :> Destructor.

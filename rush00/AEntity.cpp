@@ -15,7 +15,7 @@
 /* :> Default Constructor
  */
 AEntity::AEntity(int hp, std::string const &type, int maxHp, int atkDmg,
-				 std::string sprite)
+				 const char *sprite)
 	: sprite(sprite), _hp(hp), _type(type), _maxHp(maxHp), _atkDmg(atkDmg){}
 
 /* :> Copy Constructor
@@ -42,6 +42,22 @@ AEntity &AEntity::operator=(const AEntity &rhs) {
 void AEntity::place(int x, int y) {
 	this->_loc.x = x;
 	this->_loc.y = y;
+}
+
+/* :> transTowards
+	- draw the user to the correct location on ncurses window
+*/
+void AEntity::transTowards(int xComp, int yComp) {
+		this->_loc.x += xComp * this->_deltaLoc.x;
+		this->_loc.y += yComp * this->_deltaLoc.y;
+}
+
+/* :> draw
+	- draw the user to the correct location on ncurses window
+*/
+void AEntity::draw() {
+	mvprintw(this->_loc.y, this->_loc.x, this->sprite);
+	mvprintw(0, 0, (std::to_string(this->_loc.x) + ", " + std::to_string(this->_loc.y)).c_str());
 }
 
 /* :> changeHp

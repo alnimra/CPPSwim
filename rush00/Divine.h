@@ -17,6 +17,12 @@
 #include "User.h"
 #include <curses.h>
 #include <iostream>
+
+#define KEYUP 65
+#define KEYDOWN 66
+#define KEYRIGHT 67
+#define KEYLEFT 68
+
 class Divine {
   public:
 	Divine();
@@ -25,6 +31,8 @@ class Divine {
 
 	void initNCurses();
 	void update();
+
+	void manageUserUpdate(int keyPressed);
 	~Divine();
 
 	int isRunning;
