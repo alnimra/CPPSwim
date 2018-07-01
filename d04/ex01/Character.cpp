@@ -33,18 +33,16 @@ Character &Character::operator=(const Character &rhs) {
 	this->weapon = rhs.weapon;
 	return *this;
 }
-void			  Character::changeAp(int degOfChange){
+void Character::changeAp(int degOfChange) {
 	this->_ap += degOfChange;
-	if(this->_ap < 0)
+	if (this->_ap < 0)
 		_ap = 0;
-	else if(this->_ap > 40)
+	else if (this->_ap > 40)
 		_ap = 40;
 }
 const std::string Character::getName() const { return this->_name; }
-void			  Character::recoverAP() {
-	this->changeAp(10);
-}
-void Character::equip(AWeapon *newWeapon) { weapon = newWeapon; }
+void			  Character::recoverAP() { this->changeAp(10); }
+void			  Character::equip(AWeapon *newWeapon) { weapon = newWeapon; }
 
 void Character::attack(Enemy *enemy) {
 	if (_ap > 0 && this->weapon != nullptr) {
