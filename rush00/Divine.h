@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Game.h                                            :+:      :+:    :+:   */
+/*   Divine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,24 +13,29 @@
 #ifndef DIVINE_H
 #define DIVINE_H
 
-#include <iostream>
+#include "Enemy.h"
+#include "User.h"
 #include <curses.h>
-
-class Game {
+#include <iostream>
+class Divine {
   public:
-	Game();
-	Game(const Game &f);
-	Game &operator=(const Game &rhs);
+	Divine();
+	Divine(const Divine &divine);
+	Divine &operator=(const Divine &rhs);
 
+	void initNCurses();
 	void update();
-	~Game();
+	~Divine();
+
+	int isRunning;
 
   private:
+	User *  user;
+	int numEnemies;
 	Enemy **enemies;
-	Player *user;
-	int wave;
+	int		wave;
 };
 
-std::ostream &operator<<(std::ostream &o, const Game &rhs);
+std::ostream &operator<<(std::ostream &o, const Divine &rhs);
 
 #endif

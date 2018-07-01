@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.h                                             :+:      :+:    :+:  */
+/*   User.h                                              :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,22 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Enemy_H
-#define Enemy_H
+#ifndef User_H
+#define User_H
 
 #include "AEntity.h"
 #include <iostream>
 #include <string>
 
-class Enemy : public AEntity {
+class User : public AEntity {
   public:
-	Enemy();
-	Enemy(const Enemy &Enemy);
-	Enemy &operator=(const Enemy &rhs);
-	Enemy(int hp, std::string const &type, int maxHp, int atkDmg);
+	User();
+	User(const User &User);
+	User &operator=(const User &rhs);
+	User(int hp, std::string const &type, int maxHp, int atkDmg);
 
 	void attack(AEntity &entity);
-	virtual ~Enemy();
+	~User();
+
+
+  private:
+	int _score;
 };
 
 #endif

@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AWeapon.h                                           :+:      :+:    :+:  */
+/*   TacticalMarine.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/28 12:08:05 by mray              #+#    #+#             */
-/*   Updated: 2018/06/28 12:08:05 by mray             ###   ########.fr       */
+/*   Created: 2018/06/30 23:22:42 by mray              #+#    #+#             */
+/*   Updated: 2018/06/30 23:22:42 by mray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AWEAPON_H
-#define AWEAPON_H
+#ifndef TACTICALMARINE_H
+# define TACTICALMARINE_H
 
 #include <iostream>
-#include <string>
+#include "ISpaceMarine.hpp"
 
-class AWeapon {
-  public:
-	AWeapon();
-	AWeapon(const AWeapon &AWeapon);
-	AWeapon &operator=(const AWeapon &rhs);
-	AWeapon(const std::string &name, const int apcost, int damage);
+class TacticalMarine : public ISpaceMarine
+{
+public:
 
-	std::string getName() const;
-	int getAPCost() const;
-	int getDamage() const;
-	virtual void attack() const = 0;
-	~AWeapon();
+	TacticalMarine(void);
+	TacticalMarine(TacticalMarine const &other);
+	virtual ~TacticalMarine(void);
+	TacticalMarine &operator=(TacticalMarine const &other);
 
-  private:
-	std::string _name;
-	int _apcost;
-	int _damage;
+	ISpaceMarine*	clone(void) const;
+	void			battleCry(void) const;
+	void			rangedAttack(void) const;
+	void			meleeAttack(void) const;
 };
 
 #endif

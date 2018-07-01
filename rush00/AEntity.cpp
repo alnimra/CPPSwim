@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AWeapon.cc                                           :+:      :+:    :+: */
+/*   AEntity.cc                                           :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,37 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AWeapon.h"
+#include "AEntity.h"
 
 /* :> Default Constructor
  */
-AWeapon::AWeapon(const std::string &name, const int apcost, int damage)
-	: _name(name), _apcost(apcost), _damage(damage) {
-}
+AEntity::AEntity(int hp, std::string const &type, int maxHp, int atkDmg,
+				 std::string sprite)
+	: sprite(sprite), _hp(hp), _type(type), _maxHp(maxHp), _atkDmg(atkDmg){}
 
 /* :> Copy Constructor
 	- Assigns: the current class the values of the passed class.
 */
-AWeapon::AWeapon(const AWeapon &AWeapon) {
-	*this = AWeapon;
-}
+AEntity::AEntity(const AEntity &AEntity) { *this = AEntity; }
 
 /* :> = op Overload: Assignation operator
-	- Copies all the member variables of the AWeapon to the rhs.
+	- Copies all the member variables of the AEntity to the rhs.
 */
-AWeapon &AWeapon::operator=(const AWeapon &rhs) {
+AEntity &AEntity::operator=(const AEntity &rhs) {
 	if (this == &rhs)
 		return *this;
-	this->_name = rhs._name;
-	this->_apcost = rhs._apcost;
+	this->_hp = rhs._hp;
+	this->_type = rhs._type;
+	this->_maxHp = rhs._maxHp;
+	this->_atkDmg = rhs._atkDmg;
 	return *this;
 }
 
-std::string AWeapon::getName() const { return this->_name; }
-int			AWeapon::getAPCost() const { return this->_apcost; }
-int			AWeapon::getDamage() const { return this->_damage; }
+/* :> place
+	- changes entity loc to the x and y passed.
+*/
+void AEntity::place(int x, int y) {
+	this->_loc.x = x;
+	this->_loc.y = y;
+}
+
+/* :> changeHp
+	- change the hp of the entity
+*/
+void AEntity::changeHp(int degreeOfChange) {
+	this->_hp += degreeOfChange;
+	if (this->_hp < 0)
+		this->_hp = 0;
+	else if (this->_hp > this->_maxHp)
+		this->_hp = this->_maxHp;
+}
+
+/* :> takeDamage
+	- inflict amount damage on the Entity
+*/
+void AEntity::takeDamage(int amount) {
+	if (amount > 0)
+		this->changeHp(amount);
+}
 
 /* :> Destructor.
 	- Everything on stack, so no worries.
 */
-AWeapon::~AWeapon() {}
+AEntity::~AEntity() {}

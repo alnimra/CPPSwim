@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.h                                             :+:      :+:    :+:  */
+/*   AEntity.h                                           :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,22 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Enemy_H
-#define Enemy_H
+#ifndef AEntity_H
+#define AEntity_H
 
-#include "AEntity.h"
+#include "Point.h"
 #include <iostream>
 #include <string>
 
-class Enemy : public AEntity {
+class AEntity {
   public:
-	Enemy();
-	Enemy(const Enemy &Enemy);
-	Enemy &operator=(const Enemy &rhs);
-	Enemy(int hp, std::string const &type, int maxHp, int atkDmg);
+	AEntity();
+	AEntity(const AEntity &AEntity);
+	AEntity &operator=(const AEntity &rhs);
+	AEntity(int hp, std::string const &type, int maxHp, int atkDmgi,
+			std::string sprite);
 
-	void attack(AEntity &entity);
-	virtual ~Enemy();
+	void		 place(int x, int y);
+	void		 changeHp(int hp);
+	void		 takeDamage(int amount);
+	virtual void attack(AEntity &entity) = 0;
+	virtual ~AEntity();
+
+	std::string sprite;
+
+  protected:
+	int			_hp;
+	Point		_loc;
+	Point		_deltaLoc;
+	std::string _type;
+	int			_maxHp;
+	int			_atkDmg;
 };
 
 #endif

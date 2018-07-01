@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.h                                             :+:      :+:    :+:  */
+/*   ISquad.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/28 12:08:05 by mray              #+#    #+#             */
-/*   Updated: 2018/06/28 12:08:05 by mray             ###   ########.fr       */
+/*   Created: 2018/06/30 23:22:41 by mray              #+#    #+#             */
+/*   Updated: 2018/06/30 23:22:41 by mray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Enemy_H
-#define Enemy_H
+#ifndef ISQUAD_H
+#define ISQUAD_H
 
-#include "AEntity.h"
-#include <iostream>
-#include <string>
-
-class Enemy : public AEntity {
+class ISquad {
   public:
-	Enemy();
-	Enemy(const Enemy &Enemy);
-	Enemy &operator=(const Enemy &rhs);
-	Enemy(int hp, std::string const &type, int maxHp, int atkDmg);
-
-	void attack(AEntity &entity);
-	virtual ~Enemy();
+	virtual ~ISquad() {}
+	virtual int			  getCount() const = 0;
+	virtual ISpaceMarine *getUnit(int) const = 0;
+	virtual int			  push(ISpaceMarine *) = 0;
 };
 
 #endif

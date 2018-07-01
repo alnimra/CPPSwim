@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.h                                             :+:      :+:    :+:  */
+/*   AssaultTerminator.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/28 12:08:05 by mray              #+#    #+#             */
-/*   Updated: 2018/06/28 12:08:05 by mray             ###   ########.fr       */
+/*   Created: 2018/06/30 23:22:40 by mray              #+#    #+#             */
+/*   Updated: 2018/06/30 23:22:40 by mray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Enemy_H
-#define Enemy_H
+#ifndef ASSAULTTERMINATOR_H
+#define ASSAULTTERMINATOR_H
 
-#include "AEntity.h"
+#include "ISpaceMarine.hpp"
 #include <iostream>
-#include <string>
 
-class Enemy : public AEntity {
+class AssaultTerminator : public ISpaceMarine {
   public:
-	Enemy();
-	Enemy(const Enemy &Enemy);
-	Enemy &operator=(const Enemy &rhs);
-	Enemy(int hp, std::string const &type, int maxHp, int atkDmg);
+	AssaultTerminator(void);
+	AssaultTerminator(AssaultTerminator const &other);
+	virtual ~AssaultTerminator(void);
+	AssaultTerminator &operator=(AssaultTerminator const &other);
 
-	void attack(AEntity &entity);
-	virtual ~Enemy();
+	ISpaceMarine *clone(void) const;
+	void		  battleCry(void) const;
+	void		  rangedAttack(void) const;
+	void		  meleeAttack(void) const;
 };
 
 #endif

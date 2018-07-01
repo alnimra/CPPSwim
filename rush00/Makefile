@@ -14,7 +14,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)-$(shell uname -s)
 endif
 
-TARGET := Sorcery
+TARGET := ShootEM
 
 BINDIR := bin
 SRCDIR := ./
@@ -26,7 +26,7 @@ CC := clang++
 CCFLAGS := -g -Wall -Wextra -std=c++98
 
 LD := clang++
-LDFLAGS := -O3 -g
+LDFLAGS := -O3 -g -lncurses
 
 all: $(TARGET)
 

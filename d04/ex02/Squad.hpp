@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AWeapon.h                                           :+:      :+:    :+:  */
+/*   Squad.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/28 12:08:05 by mray              #+#    #+#             */
-/*   Updated: 2018/06/28 12:08:05 by mray             ###   ########.fr       */
+/*   Created: 2018/06/30 23:22:41 by mray              #+#    #+#             */
+/*   Updated: 2018/06/30 23:22:41 by mray             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AWEAPON_H
-#define AWEAPON_H
+#ifndef SQUAD_H
+#define SQUAD_H
 
+#include "ISpaceMarine.hpp"
+#include "ISquad.hpp"
 #include <iostream>
-#include <string>
 
-class AWeapon {
+class Squad : public ISquad {
+
+	typedef struct marineList {
+		ISpaceMarine *	 marine;
+		struct marineList *next;
+	} t_marineList;
+
   public:
-	AWeapon();
-	AWeapon(const AWeapon &AWeapon);
-	AWeapon &operator=(const AWeapon &rhs);
-	AWeapon(const std::string &name, const int apcost, int damage);
+	Squad(void);
+	Squad(Squad &other);
+	~Squad(void);
+	Squad &operator=(Squad &other);
 
-	std::string getName() const;
-	int getAPCost() const;
-	int getDamage() const;
-	virtual void attack() const = 0;
-	~AWeapon();
+	int			  getCount(void) const;
+	ISpaceMarine *getUnit(int n) const;
+	int			  push(ISpaceMarine *);
 
   private:
-	std::string _name;
-	int _apcost;
-	int _damage;
+	t_marineList *_list;
+	int			  _numUnits;
 };
 
 #endif

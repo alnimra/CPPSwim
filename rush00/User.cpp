@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.cc                                           :+:      :+:    :+: */
+/*   User.cpp                                             :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Enemy.h"
+#include "User.h"
 
 /* :> Default Constructor
  */
-Enemy::Enemy(int hp, std::string const &type, int maxHp, int atkDmg)
-	: AEntity(hp, type, maxHp, atkDmg, "😈") {}
+User::User(int hp, std::string const &type, int maxHp, int atkDmg)
+	: AEntity(hp, type, maxHp, atkDmg, "🙃") {}
 
 /* :> Copy Constructor
 	- Assigns: the current class the values of the passed class.
 */
-Enemy::Enemy(const Enemy &enemy) : AEntity(enemy){ }
-
-/* :> = op Overload: Assignation operator
-	- Copies all the member variables of the Enemy to the rhs.
-*/
-Enemy &Enemy::operator=(const Enemy &rhs) {
-	this->AEntity::operator=(rhs);
-	return *this;
-}
+User::User(const User &user) : AEntity(user) { *this = user; }
 
 /* :> attack
 	- Attacks the entity.
 */
-void Enemy::attack(AEntity &entity){
-	(void) entity;
+void User::attack(AEntity &entity) { (void)entity; }
+/* :> = op Overload: Assignation operator
+	- Copies all the member variables of the User to the rhs.
+*/
+User &User::operator=(const User &rhs) {
+	if (this == &rhs)
+		return *this;
+	this->AEntity::operator=(rhs);
+	return *this;
 }
+
 /* :> Destructor.
 	- Everything on stack, so no worries.
 */
-Enemy::~Enemy() {}
+User::~User() {}
