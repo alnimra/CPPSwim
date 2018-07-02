@@ -41,7 +41,8 @@ void Enemy::attack() {}
 /* :> attack
 	- Attacks the entity.
 */
-void Enemy::die() { this->sprite = "😇"; }
+void Enemy::die() { this->sprite = "😇";
+this->_deltaLoc.x = -0.1; }
 /* :> follow
 	- follow a entity
 */

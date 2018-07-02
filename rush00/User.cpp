@@ -17,9 +17,9 @@
  */
 User::User(int hp, std::string const &type, int maxHp,
 		   int numOfAttackableEntities, AEntity **attackableEntities)
-	: AEntity(hp, type, maxHp, "👾"),
+	: AEntity(hp, type, maxHp, "👾"), _score(0), _lives(3),
 	  _numOfAttackableEntities(numOfAttackableEntities),
-	  _attackableEntities(attackableEntities), _score(0){
+	  _attackableEntities(attackableEntities){
 	this->_deltaLoc.x = 2;
 	this->_deltaLoc.y = 1;
 	this->_loc.x = 3;
@@ -39,6 +39,8 @@ User::User(const User &user) : AEntity(user) { *this = user; }
 	- Attacks any entity
 */
 void User::attack() {
+//shot
+	system("afplay ./shot.wav &");
 	for (int i = 0; i < this->_numOfAtkInstances; i++) {
 		if (!this->_atkInstances[i]->isActive) {
 			this->_atkInstances[i]->init(this->_loc);

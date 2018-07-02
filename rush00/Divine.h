@@ -22,7 +22,7 @@
 #define KEYDOWN 66
 #define KEYRIGHT 67
 #define KEYLEFT 68
-#define WIDTH 200
+#define WIDTH 150
 #define HEIGHT 42
 
 class Divine {
@@ -35,6 +35,8 @@ class Divine {
 	void drawWindow();
 	void drawScrollingScenery();
 	void update();
+	void restart();
+	void gameOver();
 
 	void manageUserUpdate(int keyPressed);
 	void manageEnemyUpdate();

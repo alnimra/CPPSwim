@@ -28,6 +28,7 @@ class User : public AEntity {
 	void attack();
 	~User();
 	int		  _score;
+	int		  _lives;
 
   private:
 	int		  _numOfAttackableEntities;

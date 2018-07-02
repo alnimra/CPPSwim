@@ -14,7 +14,7 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)-$(shell uname -s)
 endif
 
-TARGET := ShootEM
+TARGET := ft_retro
 
 BINDIR := bin
 SRCDIR := ./
