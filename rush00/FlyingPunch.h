@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Divine.h                                           :+:      :+:    :+:   */
+/*   FlyingPunch.h                                              :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,47 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DIVINE_H
-#define DIVINE_H
+#ifndef FlyingPunch_H
+#define FlyingPunch_H
 
-#include "Enemy.h"
-#include "User.h"
+#include "AEntity.h"
+#include "AAtk.h"
 #include <curses.h>
 #include <iostream>
+#include <string>
+#include <unistd.h>
 
-#define KEYUP 65
-#define KEYDOWN 66
-#define KEYRIGHT 67
-#define KEYLEFT 68
-#define WIDTH 200
-#define HEIGHT 42
-
-class Divine {
+class FlyingPunch : public AAtk{
   public:
-	Divine();
-	Divine(const Divine &divine);
-	Divine &operator=(const Divine &rhs);
-
-	void initNCurses();
-	void drawWindow();
-	void update();
-
-	void manageUserUpdate(int keyPressed);
-	void manageEnemyUpdate();
-	void makeRndPosForEnemies();
-	void advanceEnemies();
-	void drawAllEntites();
-	~Divine();
-
-	int isRunning;
-
-  private:
-	User *  user;
-	int numEnemies;
-	AEntity **enemies;
-	int		wave;
+	FlyingPunch();
+	FlyingPunch(const FlyingPunch &FlyingPunch);
+	FlyingPunch &operator=(const FlyingPunch &rhs);
+	void execute(AEntity **entities, int numEntites);
+	void init(const Point &loc);
+	~FlyingPunch();
 };
-
-std::ostream &operator<<(std::ostream &o, const Divine &rhs);
 
 #endif

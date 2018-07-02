@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Divine.h                                           :+:      :+:    :+:   */
+/*   AAtk.h                                              :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mray <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,47 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DIVINE_H
-#define DIVINE_H
+#ifndef AAtk_H
+#define AAtk_H
 
-#include "Enemy.h"
-#include "User.h"
+#include "AEntity.h"
+#include "Point.h"
 #include <curses.h>
 #include <iostream>
+#include <string>
+#include <unistd.h>
 
-#define KEYUP 65
-#define KEYDOWN 66
-#define KEYRIGHT 67
-#define KEYLEFT 68
-#define WIDTH 200
-#define HEIGHT 42
-
-class Divine {
+class AEntity;
+class AAtk {
   public:
-	Divine();
-	Divine(const Divine &divine);
-	Divine &operator=(const Divine &rhs);
+	AAtk();
+	AAtk(const AAtk &AAtk);
+	AAtk &operator=(const AAtk &rhs);
+	AAtk(std::string const &type, int atkDmg, const char *sprite);
 
-	void initNCurses();
-	void drawWindow();
-	void update();
+	void		 place(int x, int y);
+	void		 transTowards(int xComp, int yComp);
+	void		 draw();
+	void		 applyDamage(AEntity &entity);
+	virtual void execute(AEntity **entities, int numEntites) = 0;
+	virtual void init(const Point &loc) = 0;
+	void remove();
+	AEntity		*checkForCollisions(AEntity **entity, int numEntites);
+	virtual ~AAtk();
 
-	void manageUserUpdate(int keyPressed);
-	void manageEnemyUpdate();
-	void makeRndPosForEnemies();
-	void advanceEnemies();
-	void drawAllEntites();
-	~Divine();
+	bool			isActive;
+	const char *sprite;
 
-	int isRunning;
-
-  private:
-	User *  user;
-	int numEnemies;
-	AEntity **enemies;
-	int		wave;
+  protected:
+	Point		_loc;
+	Point		_deltaLoc;
+	std::string _type;
+	int			_atkDmg;
 };
-
-std::ostream &operator<<(std::ostream &o, const Divine &rhs);
 
 #endif

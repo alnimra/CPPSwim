@@ -15,12 +15,11 @@
 /* :> Default Constructor
 	- Initializes: _val to 0
 */
-Divine::Divine()
-	: isRunning(1), user(new User(1, "User", 1, 1)), numEnemies(10), wave(1) {
-	this->enemies = new Enemy *[numEnemies];
+Divine::Divine() : isRunning(1), numEnemies(20), wave(1) {
+	this->enemies = new AEntity *[numEnemies];
 	for (int i = 0; i < numEnemies; i++)
-		this->enemies[i] = new Enemy(1, "Enemy", 1, 1);
-
+		this->enemies[i] = new Enemy(1, "Enemy", 1);
+	this->user = new User(1, "User", 1, numEnemies, this->enemies);
 	this->makeRndPosForEnemies();
 	// Init ncurses
 	this->initNCurses();
@@ -42,9 +41,9 @@ Divine &Divine::operator=(const Divine &rhs) {
 	// Deep Copy
 	// TODO: Need to make cloning functions for the enemies later for this to
 	// work
-	this->enemies = new Enemy *[this->numEnemies];
+	this->enemies = new AEntity *[this->numEnemies];
 	for (int i = 0; i < this->numEnemies; i++)
-		this->enemies[i] = new Enemy(1, "Enemy", 1, 1);
+		this->enemies[i] = new Enemy(1, "Enemy", 1);
 	this->wave = rhs.wave;
 	return *this;
 }
@@ -58,22 +57,39 @@ void Divine::initNCurses() {
 	initscr();
 	noecho();
 	nodelay(stdscr, true);
-	curs_set(FALSE);
+	curs_set(false);
+	keypad(stdscr, true);
+}
+
+/* :> drawWindows.
+	- Initialize: the NCurses area.
+*/
+void Divine::drawWindow() {
+	for (int i = 0; i < WIDTH; i++) {
+		mvprintw(0, i, "-");
+		mvprintw(HEIGHT, i, "-");
+	}
+	for (int i = 0; i < HEIGHT; i++) {
+		mvprintw(i, 0, "|");
+		mvprintw(i, WIDTH, "|");
+	}
 }
 
 /* :> manageUserUpdate.
 	- Manages: the user update events.
 */
 void Divine::manageUserUpdate(int keyPressed) {
-	if (keyPressed == KEYUP)
+	if (keyPressed == KEY_UP)
 		user->transTowards(0, -1);
-	else if (keyPressed == KEYDOWN)
+	else if (keyPressed == KEY_DOWN)
 		user->transTowards(0, 1);
-	else if (keyPressed == KEYLEFT)
+	else if (keyPressed == KEY_LEFT)
 		user->transTowards(-1, 0);
-	else if (keyPressed == KEYRIGHT)
-		user->transTowards(1, 0);
-	user->draw();
+	else if (keyPressed == KEY_RIGHT)
+		user->attack();
+	else if (keyPressed == 27)
+		this->isRunning = 0;
+	user->update();
 }
 
 /* :> manageUserUpdate.
@@ -90,8 +106,8 @@ void Divine::manageEnemyUpdate() {
 void Divine::makeRndPosForEnemies() {
 	int rndX;
 	for (int i = 0; i < this->numEnemies; i++) {
-		rndX = rand() % 10;
-		this->enemies[i]->place(60 + rndX, ((i)*2) + 3);
+		rndX = rand() % this->numEnemies;
+		this->enemies[i]->place(WIDTH + rndX, ((i)*2) + 3);
 	}
 }
 
@@ -99,8 +115,14 @@ void Divine::makeRndPosForEnemies() {
 	- Manages: the user update events.
 */
 void Divine::drawAllEntites() {
-	for (int i = 0; i < this->numEnemies; i++)
+	for (int i = 0; i < this->numEnemies; i++) {
 		this->enemies[i]->draw();
+		if (this->enemies[i]->isDead() &&
+			strcmp(this->enemies[i]->sprite, "😇") != 0) {
+			user->_score++;
+			((Enemy*)this->enemies[i])->die();
+		}
+	}
 }
 /* :> advanceAllEntites.
 	- Manages: the user update events.
@@ -113,10 +135,10 @@ void Divine::advanceEnemies() {
 /* :> update
 	- Update: the game state.
 */
-int  ch;
 void Divine::update() {
-	ch = getch();
+	int ch = getch();
 	clear();
+	this->drawWindow();
 	this->manageUserUpdate(ch);
 	this->manageEnemyUpdate();
 	refresh();
@@ -128,6 +150,6 @@ void Divine::update() {
 Divine::~Divine() {
 	for (int i = 0; i < this->numEnemies; i++)
 		delete this->enemies[i];
-	delete[]this->enemies;
+	delete[] this->enemies;
 	endwin();
 }

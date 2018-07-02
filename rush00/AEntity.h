@@ -13,26 +13,29 @@
 #ifndef AEntity_H
 #define AEntity_H
 
-#include "Point.h"
 #include <curses.h>
 #include <iostream>
 #include <string>
 #include <unistd.h>
 
+#include "AAtk.h"
+#include "Point.h"
+class AAtk;
 class AEntity {
   public:
 	AEntity();
 	AEntity(const AEntity &AEntity);
 	AEntity &operator=(const AEntity &rhs);
-	AEntity(int hp, std::string const &type, int maxHp, int atkDmgi,
-			const char *sprite);
+	AEntity(int hp, std::string const &type, int maxHp, const char *sprite);
 
 	void		 place(int x, int y);
 	void		 transTowards(int xComp, int yComp);
 	void		 draw();
+	bool		 isDead();
 	void		 changeHp(int hp);
 	void		 takeDamage(int amount);
-	virtual void attack(AEntity &entity) = 0;
+	bool			 isCollidedWith(Point loc, int width, int height);
+	virtual void attack() = 0;
 	virtual ~AEntity();
 
 	const char *sprite;
@@ -43,7 +46,7 @@ class AEntity {
 	Point		_deltaLoc;
 	std::string _type;
 	int			_maxHp;
-	int			_atkDmg;
+	AAtk *		_atk;
 };
 
 #endif

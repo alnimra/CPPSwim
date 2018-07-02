@@ -22,14 +22,18 @@ class User : public AEntity {
 	User();
 	User(const User &User);
 	User &operator=(const User &rhs);
-	User(int hp, std::string const &type, int maxHp, int atkDmg);
-
-	void attack(AEntity &entity);
+	User(int hp, std::string const &type, int maxHp, int numOfAttackableEntites,
+		 AEntity **attackableEntities);
+	void update();
+	void attack();
 	~User();
-
+	int		  _score;
 
   private:
-	int _score;
+	int		  _numOfAttackableEntities;
+	AEntity **_attackableEntities;
+	AAtk **   _atkInstances;
+	int			_numOfAtkInstances;
 };
 
 #endif

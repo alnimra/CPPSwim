@@ -14,8 +14,8 @@
 
 /* :> Default Constructor
  */
-Enemy::Enemy(int hp, std::string const &type, int maxHp, int atkDmg)
-	: AEntity(hp, type, maxHp, atkDmg, "😈") {
+Enemy::Enemy(int hp, std::string const &type, int maxHp)
+	: AEntity(hp, type, maxHp, "😈") {
 	this->_deltaLoc.x = .01;
 }
 
@@ -35,7 +35,15 @@ Enemy &Enemy::operator=(const Enemy &rhs) {
 /* :> attack
 	- Attacks the entity.
 */
-void Enemy::attack(AEntity &entity) { (void)entity; }
+void Enemy::attack() { }
+
+/* :> attack
+	- Attacks the entity.
+*/
+void Enemy::die() {
+	this->sprite = "😇";
+	this->_deltaLoc.x = 0;
+}
 /* :> Destructor.
 	- Everything on stack, so no worries.
 */

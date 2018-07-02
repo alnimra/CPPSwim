@@ -22,10 +22,11 @@ class Enemy : public AEntity {
 	Enemy();
 	Enemy(const Enemy &Enemy);
 	Enemy &operator=(const Enemy &rhs);
-	Enemy(int hp, std::string const &type, int maxHp, int atkDmg);
-
-	void attack(AEntity &entity);
+	Enemy(int hp, std::string const &type, int maxHp);
+	void die();
+	void attack();
 	virtual ~Enemy();
+
 };
 
 #endif

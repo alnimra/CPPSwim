@@ -11,13 +11,23 @@
 /* ************************************************************************** */
 
 #include "User.h"
+#include "FlyingPunch.h"
 
 /* :> Default Constructor
  */
-User::User(int hp, std::string const &type, int maxHp, int atkDmg)
-	: AEntity(hp, type, maxHp, atkDmg, "👾") {
+User::User(int hp, std::string const &type, int maxHp,
+		   int numOfAttackableEntities, AEntity **attackableEntities)
+	: AEntity(hp, type, maxHp, "👾"),
+	  _numOfAttackableEntities(numOfAttackableEntities),
+	  _attackableEntities(attackableEntities), _score(0){
 	this->_deltaLoc.x = 2;
 	this->_deltaLoc.y = 1;
+	this->_loc.x = 1;
+	this->_numOfAtkInstances = 20;
+	this->_atkInstances = new AAtk *[this->_numOfAtkInstances];
+	for (int i = 0; i < this->_numOfAtkInstances; i++) {
+		this->_atkInstances[i] = new FlyingPunch();
+	}
 }
 
 /* :> Copy Constructor
@@ -26,9 +36,28 @@ User::User(int hp, std::string const &type, int maxHp, int atkDmg)
 User::User(const User &user) : AEntity(user) { *this = user; }
 
 /* :> attack
-	- Attacks the entity.
+	- Attacks any entity
 */
-void User::attack(AEntity &entity) { (void)entity; }
+void User::attack() {
+	for (int i = 0; i < this->_numOfAtkInstances; i++) {
+		if (!this->_atkInstances[i]->isActive) {
+			this->_atkInstances[i]->init(this->_loc);
+			return;
+		}
+	}
+}
+
+/* :> update
+	- Updates user for game logic
+*/
+void User::update() {
+	for (int i = 0; i < this->_numOfAtkInstances; i++) {
+		if (this->_atkInstances[i]->isActive)
+			this->_atkInstances[i]->execute(this->_attackableEntities,
+											this->_numOfAttackableEntities);
+	}
+	this->draw();
+}
 /* :> = op Overload: Assignation operator
 	- Copies all the member variables of the User to the rhs.
 */
