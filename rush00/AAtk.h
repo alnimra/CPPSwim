@@ -44,6 +44,7 @@ class AAtk {
   protected:
 	Point		_loc;
 	Point		_deltaLoc;
+	char		_dir;
 	std::string _type;
 	int			_atkDmg;
 };

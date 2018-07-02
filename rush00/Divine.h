@@ -33,6 +33,7 @@ class Divine {
 
 	void initNCurses();
 	void drawWindow();
+	void drawScrollingScenery();
 	void update();
 
 	void manageUserUpdate(int keyPressed);
@@ -49,6 +50,7 @@ class Divine {
 	int numEnemies;
 	AEntity **enemies;
 	int		wave;
+	int scrolling;
 };
 
 std::ostream &operator<<(std::ostream &o, const Divine &rhs);

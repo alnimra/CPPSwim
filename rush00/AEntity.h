@@ -40,9 +40,9 @@ class AEntity {
 
 	const char *sprite;
 
+	Point		_loc;
   protected:
 	int			_hp;
-	Point		_loc;
 	Point		_deltaLoc;
 	std::string _type;
 	int			_maxHp;

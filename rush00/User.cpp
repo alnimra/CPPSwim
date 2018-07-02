@@ -22,7 +22,7 @@ User::User(int hp, std::string const &type, int maxHp,
 	  _attackableEntities(attackableEntities), _score(0){
 	this->_deltaLoc.x = 2;
 	this->_deltaLoc.y = 1;
-	this->_loc.x = 1;
+	this->_loc.x = 3;
 	this->_numOfAtkInstances = 20;
 	this->_atkInstances = new AAtk *[this->_numOfAtkInstances];
 	for (int i = 0; i < this->_numOfAtkInstances; i++) {

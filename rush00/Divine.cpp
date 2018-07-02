@@ -52,6 +52,8 @@ Divine &Divine::operator=(const Divine &rhs) {
 	- Initialize: the NCurses area.
 */
 void Divine::initNCurses() {
+	//mp3
+	system("afplay ./bgm.mp3 &");
 	// Emoji Support
 	setlocale(LC_ALL, "");
 	initscr();
@@ -65,6 +67,10 @@ void Divine::initNCurses() {
 	- Initialize: the NCurses area.
 */
 void Divine::drawWindow() {
+	mvprintw(HEIGHT + 1, 0, "ANGELS AND DEMONS");
+	mvprintw(HEIGHT + 3, 0,
+			 ("Your holiness: " + std::to_string(user->_score)).c_str());
+
 	for (int i = 0; i < WIDTH; i++) {
 		mvprintw(0, i, "-");
 		mvprintw(HEIGHT, i, "-");
@@ -73,6 +79,20 @@ void Divine::drawWindow() {
 		mvprintw(i, 0, "|");
 		mvprintw(i, WIDTH, "|");
 	}
+}
+
+/* :> drawScrollingScenery
+ */
+void Divine::drawScrollingScenery() {
+	for (int j = 0; j < HEIGHT; j += 5) {
+		for (int i = this->scrolling; i < WIDTH; i += 2) {
+			mvprintw(j, i, "|");
+		}
+	}
+	if (this->scrolling)
+		this->scrolling = 0;
+	else
+		this->scrolling = 1;
 }
 
 /* :> manageUserUpdate.
@@ -85,7 +105,7 @@ void Divine::manageUserUpdate(int keyPressed) {
 		user->transTowards(0, 1);
 	else if (keyPressed == KEY_LEFT)
 		user->transTowards(-1, 0);
-	else if (keyPressed == KEY_RIGHT)
+	else if (keyPressed == ' ')
 		user->attack();
 	else if (keyPressed == 27)
 		this->isRunning = 0;
@@ -120,7 +140,7 @@ void Divine::drawAllEntites() {
 		if (this->enemies[i]->isDead() &&
 			strcmp(this->enemies[i]->sprite, "😇") != 0) {
 			user->_score++;
-			((Enemy*)this->enemies[i])->die();
+			((Enemy *)this->enemies[i])->die();
 		}
 	}
 }
@@ -128,8 +148,9 @@ void Divine::drawAllEntites() {
 	- Manages: the user update events.
 */
 void Divine::advanceEnemies() {
-	for (int i = 0; i < this->numEnemies; i++)
-		this->enemies[i]->transTowards(-1, 0);
+	for (int i = 0; i < this->numEnemies; i++) {
+		((Enemy *)this->enemies[i])->move(*user);
+	}
 }
 
 /* :> update
@@ -139,6 +160,7 @@ void Divine::update() {
 	int ch = getch();
 	clear();
 	this->drawWindow();
+	this->drawScrollingScenery();
 	this->manageUserUpdate(ch);
 	this->manageEnemyUpdate();
 	refresh();

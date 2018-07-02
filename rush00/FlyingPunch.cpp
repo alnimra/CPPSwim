@@ -16,7 +16,7 @@
 /* :> Default Constructor
  */
 FlyingPunch::FlyingPunch() : AAtk("Flying Punch", 1, "🤜") {
-	this->_deltaLoc.x = 0.1;
+	this->_deltaLoc.x = 0.2;
 }
 
 /* :> Copy Constructor

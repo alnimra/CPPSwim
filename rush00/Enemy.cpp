@@ -16,7 +16,8 @@
  */
 Enemy::Enemy(int hp, std::string const &type, int maxHp)
 	: AEntity(hp, type, maxHp, "😈") {
-	this->_deltaLoc.x = .01;
+	this->_deltaLoc.x = .02;
+	this->_deltaLoc.y = .01;
 }
 
 /* :> Copy Constructor
@@ -35,14 +36,37 @@ Enemy &Enemy::operator=(const Enemy &rhs) {
 /* :> attack
 	- Attacks the entity.
 */
-void Enemy::attack() { }
+void Enemy::attack() {}
 
 /* :> attack
 	- Attacks the entity.
 */
-void Enemy::die() {
-	this->sprite = "😇";
-	this->_deltaLoc.x = 0;
+void Enemy::die() { this->sprite = "😇"; }
+/* :> follow
+	- follow a entity
+*/
+void Enemy::follow(AEntity &e) {
+	double dX = 0;
+	double dY = 0;
+	if ((int)this->_loc.x > (int)e._loc.x)
+		dX = -1;
+	else if ((int)this->_loc.x < (int)e._loc.x)
+		dX = 1;
+	if ((int)this->_loc.y > (int)e._loc.y)
+		dY = -1;
+	else if ((int)this->_loc.y < (int)e._loc.y)
+		dY = 1;
+	this->transTowards(dX, dY);
+}
+
+/* :> move
+	- move the player accordingly.
+*/
+void Enemy::move(AEntity &e) {
+	if (this->_loc.x <= 60 && strcmp(this->sprite, "😈") == 0)
+		this->follow(e);
+	else
+		this->transTowards(-1, 0);
 }
 /* :> Destructor.
 	- Everything on stack, so no worries.

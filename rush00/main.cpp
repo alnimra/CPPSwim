@@ -7,5 +7,6 @@ int main(void) {
 		gl.update();
 		usleep(1600);
 	}
+	system("kill `pgrep afplay`");
 	return 0;
 }

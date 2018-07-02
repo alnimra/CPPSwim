@@ -25,6 +25,8 @@ class Enemy : public AEntity {
 	Enemy(int hp, std::string const &type, int maxHp);
 	void die();
 	void attack();
+	void follow(AEntity &e);
+	void move(AEntity &e);
 	virtual ~Enemy();
 
 };
